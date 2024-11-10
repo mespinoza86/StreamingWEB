@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                // Si la clave es correcta, redirigir al video
-                window.location.href = '/video';
+                console.log('Contraseña correcta, redirigiendo...');
+                window.location.href = '/video';  // Redirigir al video
             } else {
-                // Si la clave es incorrecta, mostrar mensaje de error
+                console.log('Contraseña incorrecta, mostrando error.');
                 messageContainer.textContent = 'La clave ingresada es incorrecta. Inténtalo nuevamente.';
                 messageContainer.style.color = 'red';
             }

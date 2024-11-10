@@ -14,21 +14,19 @@
       <h1>Bienvenidos, Manudos de Corazón!!!!!</h1>
     </header>
 
-    <!-- Contenedor para el video de Twitch -->
-    <div id="twitch-embed" class="stream-container"></div>
+    <!-- Contenedor para el video de YouTube -->
+    <div class="stream-container" id="stream-container" style="display: none;">
+      <iframe
+        width="100%" height="500"
+        src="https://www.youtube.com/embed/kDm2hj0SjIM?autoplay=1&modestbranding=1&showinfo=0&controls=1&rel=0"
+        frameborder="0" allowfullscreen="true">
+      </iframe>
+    </div>
 
-    <!-- Load the Twitch embed script -->
-    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-
-    <!-- Crear el player de Twitch -->
-    <script type="text/javascript">
-      new Twitch.Player("twitch-embed", {
-        channel: "makin1986",  // Aquí va tu nombre de canal de Twitch
-        width: "100%",
-        height: "100%",
-        layout: "video"   // Configura el video layout
-      });
-    </script>
+    <!-- Mensaje de acceso no autorizado -->
+    <div id="unauthorized-message" style="display: none;">
+      <p>Acceso no autorizado. Por favor, ingresa la clave correcta.</p>
+    </div>
 
     <!-- Pie de página -->
     <footer class="footer">
@@ -36,5 +34,21 @@
     </footer>
   </div>
 
+  <script>
+    // Realizamos una solicitud para verificar si el acceso es autorizado
+    fetch('/check-session', { method: 'GET' })
+      .then(response => {
+        if (response.ok) {
+          // Si está autenticado, mostramos el video
+          document.getElementById('stream-container').style.display = 'block';
+        } else {
+          // Si no está autenticado, mostramos el mensaje de error
+          document.getElementById('unauthorized-message').style.display = 'block';
+        }
+      })
+      .catch(error => {
+        console.error('Error al verificar sesión:', error);
+      });
+  </script>
 </body>
 </html>
